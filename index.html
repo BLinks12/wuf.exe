@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wuf.exe - CRT Interface</title>
+    <title>coin.exe - Crypto Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            --crt-green: #00ff00;
-            --crt-glow: rgba(0,255,0,0.1);
+            --crt-blue: #00aaff;
+            --crt-glow: rgba(0,170,255,0.1);
             --scanline: rgba(0,0,0,0.3);
-            --phosphor: rgba(0,255,0,0.1);
+            --phosphor: rgba(0,170,255,0.1);
         }
 
         body {
             background-color: #000;
-            color: var(--crt-green);
+            color: var(--crt-blue);
             font-family: 'VT323', monospace;
             min-height: 100vh;
             margin: 0;
@@ -47,27 +47,27 @@
         .header h1 {
             font-size: 3rem;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--crt-green);
+            text-shadow: 0 0 10px var(--crt-blue);
             margin: 0;
             position: relative;
         }
 
         .header h1::after {
-            content: "v1.0.3";
+            content: "v0.8.1b";
             position: absolute;
             right: -50px;
             bottom: 0;
             font-size: 1rem;
-            color: #00ff0077;
+            color: #00aaff77;
         }
 
-        .wuf-canvas {
+        .coin-canvas {
             width: 400px;
             height: 400px;
             margin: 2rem auto;
-            border: 3px solid #00ff0077;
-            background: #001100;
-            box-shadow: inset 0 0 20px #002200;
+            border: 3px solid #00aaff77;
+            background: #000a1a;
+            box-shadow: inset 0 0 20px #002233;
             display: grid;
             place-content: center;
             position: relative;
@@ -78,52 +78,52 @@
             height: 90%;
             object-fit: contain;
             image-rendering: pixelated;
-            border: 2px solid #00ff0077;
+            border: 2px solid #00aaff77;
             padding: 10px;
             animation: crt-flicker 2s infinite;
         }
 
-        .description {
-            border-left: 4px solid var(--crt-green);
+        .blockchain-readout {
+            border-left: 4px solid var(--crt-blue);
             padding: 1rem;
             margin: 2rem 0;
-            background: #001100;
-            text-shadow: 0 0 5px var(--crt-green);
+            background: #000a1a;
+            text-shadow: 0 0 5px var(--crt-blue);
         }
 
-        .chat-container {
-            border: 3px solid #00ff0077;
+        .crypto-interface {
+            border: 3px solid #00aaff77;
             padding: 1rem;
-            background: #001100;
-            box-shadow: inset 0 0 20px #002200;
+            background: #000a1a;
+            box-shadow: inset 0 0 20px #002233;
         }
 
-        .chat-messages {
+        .transaction-log {
             height: 300px;
             overflow-y: auto;
             margin-bottom: 1rem;
             padding: 1rem;
-            border: 2px solid #00ff0033;
+            border: 2px solid #00aaff33;
             position: relative;
         }
 
-        .chat-input {
+        .crypto-input {
             width: 100%;
             padding: 1rem;
-            background: #002200;
-            border: 2px solid #00ff0077;
-            color: var(--crt-green);
+            background: #002233;
+            border: 2px solid #00aaff77;
+            color: var(--crt-blue);
             font-family: inherit;
             font-size: 1.2rem;
             transition: all 0.3s ease;
         }
 
-        .chat-input:focus {
+        .crypto-input:focus {
             outline: none;
-            box-shadow: 0 0 15px #00ff0033;
+            box-shadow: 0 0 15px #00aaff33;
         }
 
-        .message {
+        .log-entry {
             margin: 0.5rem 0;
             padding: 0.5rem;
             position: relative;
@@ -153,7 +153,7 @@
             }
         }
 
-        .chat-messages::after {
+        .transaction-log::after {
             content: "";
             position: absolute;
             top: 0;
@@ -180,70 +180,70 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>wuf.exe</h1>
-            <p>CANINE TERMINAL INTERFACE</p>
+            <h1>coin.exe</h1>
+            <p>BLOCKCHAIN TERMINAL INTERFACE</p>
         </header>
 
-        <div class="wuf-canvas">
-            <!-- Replace 'wuf.png' with your actual image file -->
-            <img src="wuf.png" alt="wuf.exe cyber canine" class="pixel-art">
+        <div class="coin-canvas">
+            <img src="coin.png" alt="Cryptocurrency interface" class="pixel-art">
         </div>
 
-        <div class="description">
-            <h2>SYSTEM READOUT</h2>
-            <p>> INITIALIZING CYBER-K9 PROTOCOL...</p>
-            <p>> BARK PROCESSOR: ONLINE</p>
-            <p>> TAIL WAG SUBROUTINE: ACTIVE</p>
-            <p>> TREAT RECOGNITION: ENGAGED</p>
+        <div class="blockchain-readout">
+            <h2>BLOCKCHAIN STATUS</h2>
+            <p>> INITIALIZING NODE CONNECTION...</p>
+            <p>> BLOCK HEIGHT: #783,421</p>
+            <p>> HASH RATE: 148.76 TH/s</p>
+            <p>> WALLET SECURITY: ENCRYPTED</p>
         </div>
 
-        <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <div class="message">> SYSTEM BOOT COMPLETE</div>
-                <div class="message">> BARK! BARK! (Translation: Ready for input)</div>
+        <div class="crypto-interface">
+            <div class="transaction-log" id="txLog">
+                <div class="log-entry">> SYSTEM: MINER INITIALIZED</div>
+                <div class="log-entry">> NETWORK: AWAITING TRANSACTIONS</div>
             </div>
-            <input type="text" class="chat-input" id="userInput" 
-                   placeholder="ENTER COMMAND..." 
+            <input type="text" class="crypto-input" id="cryptoCommand" 
+                   placeholder="ENTER CRYPTO COMMAND..." 
                    maxlength="60">
         </div>
     </div>
 
     <script>
-        const responses = [
-            "BARK! (Status: Command accepted)",
-            "WHINE... (Error: Treats required)",
-            "GROWL! (Alert: Invalid syntax)",
-            "HOWL~~ (Network: Connection stable)",
-            "YIP! (Protocol: Playtime initiated)",
-            "ARF? (Query: Repeat command)",
-            "WHIMPER... (Error: Syntax error)",
-            "GRRR... (System: Processing)",
-            "BORK! (Warning: System overload)"
+        const cryptoResponses = [
+            "TX: 0x3f...b2a1 CONFIRMED",
+            "ERROR: INSUFFICIENT GAS",
+            "MINING: BLOCK #783,422 FOUND",
+            "WALLET: 0.8345 BTC AVAILABLE",
+            "ALERT: VOLATILITY SPIKE DETECTED",
+            "SYNC: 98.7% COMPLETE",
+            "EXCHANGE: LIQUIDITY LOW",
+            "CONTRACT: 0x89...c4d2 EXECUTED",
+            "ORACLE: PRICE FEED UPDATED",
+            "SECURITY: 2FA REQUIRED"
         ];
 
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
+        const txLog = document.getElementById('txLog');
+        const cryptoCommand = document.getElementById('cryptoCommand');
 
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && userInput.value.trim()) {
-                // Add user message
-                const userDiv = document.createElement('div');
-                userDiv.className = 'message';
-                userDiv.textContent = `> ${userInput.value.toUpperCase()}`;
-                chatMessages.appendChild(userDiv);
+        cryptoCommand.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && cryptoCommand.value.trim()) {
+                // User command
+                const userEntry = document.createElement('div');
+                userEntry.className = 'log-entry';
+                userEntry.textContent = `> ${cryptoCommand.value.toUpperCase()}`;
+                txLog.appendChild(userEntry);
 
-                // Add wuf.exe response
+                // System response
                 setTimeout(() => {
-                    const response = responses[Math.floor(Math.random() * responses.length)];
-                    const responseDiv = document.createElement('div');
-                    responseDiv.className = 'message';
-                    responseDiv.textContent = `> ${response}`;
-                    chatMessages.appendChild(responseDiv);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 500);
+                    const response = cryptoResponses[Math.floor(Math.random() * cryptoResponses.length)];
+                    const responseEntry = document.createElement('div');
+                    responseEntry.className = 'log-entry';
+                    responseEntry.textContent = `> ${response}`;
+                    txLog.appendChild(responseEntry);
+                    txLog.scrollTop = txLog.scrollHeight;
+                }, 300);
 
-                userInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                cryptoCommand.value = '';
+                txLog.scrollTop = txLog.scrollHeight;
             }
         });
     </script>
