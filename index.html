@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wuf.exe - CRT Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --crt-green: #00ff00;
+            --crt-glow: rgba(0,255,0,0.1);
+            --scanline: rgba(0,0,0,0.3);
+            --phosphor: rgba(0,255,0,0.1);
+        }
+
+        body {
+            background-color: #000;
+            color: var(--crt-green);
+            font-family: 'VT323', monospace;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 20px solid #333;
+            border-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==') 20 stretch;
+            background-image: 
+                linear-gradient(var(--phosphor) 1px, transparent 1px),
+                linear-gradient(90deg, var(--phosphor) 1px, transparent 1px),
+                repeating-linear-gradient(180deg, transparent, var(--scanline) 3px);
+            background-size: 4px 4px, 4px 4px, auto;
+            animation: flicker 0.1s infinite;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--crt-green);
+            margin: 0;
+            position: relative;
+        }
+
+        .header h1::after {
+            content: "v1.0.3";
+            position: absolute;
+            right: -50px;
+            bottom: 0;
+            font-size: 1rem;
+            color: #00ff0077;
+        }
+
+        .wuf-canvas {
+            width: 400px;
+            height: 400px;
+            margin: 2rem auto;
+            border: 3px solid #00ff0077;
+            background: #001100;
+            box-shadow: inset 0 0 20px #002200;
+            display: grid;
+            place-content: center;
+            position: relative;
+        }
+
+        .pixel-art {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            border: 2px solid #00ff0077;
+            padding: 10px;
+            animation: crt-flicker 2s infinite;
+        }
+
+        .description {
+            border-left: 4px solid var(--crt-green);
+            padding: 1rem;
+            margin: 2rem 0;
+            background: #001100;
+            text-shadow: 0 0 5px var(--crt-green);
+        }
+
+        .chat-container {
+            border: 3px solid #00ff0077;
+            padding: 1rem;
+            background: #001100;
+            box-shadow: inset 0 0 20px #002200;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 2px solid #00ff0033;
+            position: relative;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 1rem;
+            background: #002200;
+            border: 2px solid #00ff0077;
+            color: var(--crt-green);
+            font-family: inherit;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #00ff0033;
+        }
+
+        .message {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            position: relative;
+            animation: text-appear 0.5s ease-out;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+
+        @keyframes crt-flicker {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+
+        @keyframes text-appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-messages::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                var(--scanline) 51%,
+                transparent 51%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scanline 6s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>wuf.exe</h1>
+            <p>CANINE TERMINAL INTERFACE</p>
+        </header>
+
+        <div class="wuf-canvas">
+            <!-- Replace 'wuf.png' with your actual image file -->
+            <img src="wuf.png" alt="wuf.exe cyber canine" class="pixel-art">
+        </div>
+
+        <div class="description">
+            <h2>SYSTEM READOUT</h2>
+            <p>> INITIALIZING CYBER-K9 PROTOCOL...</p>
+            <p>> BARK PROCESSOR: ONLINE</p>
+            <p>> TAIL WAG SUBROUTINE: ACTIVE</p>
+            <p>> TREAT RECOGNITION: ENGAGED</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message">> SYSTEM BOOT COMPLETE</div>
+                <div class="message">> BARK! BARK! (Translation: Ready for input)</div>
+            </div>
+            <input type="text" class="chat-input" id="userInput" 
+                   placeholder="ENTER COMMAND..." 
+                   maxlength="60">
+        </div>
+    </div>
+
+    <script>
+        const responses = [
+            "BARK! (Status: Command accepted)",
+            "WHINE... (Error: Treats required)",
+            "GROWL! (Alert: Invalid syntax)",
+            "HOWL~~ (Network: Connection stable)",
+            "YIP! (Protocol: Playtime initiated)",
+            "ARF? (Query: Repeat command)",
+            "WHIMPER... (Error: Syntax error)",
+            "GRRR... (System: Processing)",
+            "BORK! (Warning: System overload)"
+        ];
+
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && userInput.value.trim()) {
+                // Add user message
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message';
+                userDiv.textContent = `> ${userInput.value.toUpperCase()}`;
+                chatMessages.appendChild(userDiv);
+
+                // Add wuf.exe response
+                setTimeout(() => {
+                    const response = responses[Math.floor(Math.random() * responses.length)];
+                    const responseDiv = document.createElement('div');
+                    responseDiv.className = 'message';
+                    responseDiv.textContent = `> ${response}`;
+                    chatMessages.appendChild(responseDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 500);
+
+                userInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
